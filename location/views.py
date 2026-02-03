@@ -1,10 +1,11 @@
+import csv
 from django.http import JsonResponse
 from django.db.models import Q
 from .models import County, SubCounty, Ward
 
 # GET /api/counties/
 def get_counties(request):
-    counties = County.objects.all().order_by('name').values('id', 'name')
+    counties = County.objects.all().order_by('name').values('id', 'name', 'latitude', 'longitude')
     return JsonResponse(list(counties), safe=False)
 
 
@@ -97,3 +98,19 @@ def search_wards(request):
         for w in wards
     ]
     return JsonResponse(data, safe=False)
+
+def get_latitude_longitude(request):
+    data = {
+        "counties": list(
+            County.objects.values("id", "name", "latitude", "longitude")
+        ),
+        "subcounties": list(
+            SubCounty.objects.values("id", "name", "latitude", "longitude")
+        ),
+        "wards": list(
+            Ward.objects.values("id", "name", "latitude", "longitude")
+        ),
+    }
+
+    return JsonResponse(data)
+
