@@ -7,4 +7,6 @@ urlpatterns = [
     path('api/wards/', views.get_wards),
     path('api/wards/<int:ward_id>/', views.get_ward),
     path('api/wards/search/', views.search_wards),
+    path('api/latitude-longitude/', views.get_latitude_longitude),
+    path('api/latitude-longitude/nearest-ward/', views.get_nearest_ward),
 ]
